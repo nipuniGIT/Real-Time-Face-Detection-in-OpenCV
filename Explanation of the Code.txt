@@ -1,0 +1,56 @@
+Explanation of the Code
+Loading the Haar Cascade Classifier:
+
+python
+          
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+This line loads a pre-trained face detection model from OpenCV.
+
+Capturing Video from Webcam:
+
+python
+          
+video_capture = cv2.VideoCapture(0)
+This line initializes the video capture object to capture video from the default webcam (0).
+
+Processing Video Frames:
+
+python
+          
+while True:
+    ret, frame = video_capture.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+video_capture.read() captures each frame from the webcam.
+cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) converts the frame to grayscale.
+face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)) detects faces in the grayscale frame.
+Drawing Rectangles Around Faces:
+
+python
+          
+for (x, y, w, h) in faces:
+    cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+This loop draws rectangles around the detected faces on the original frame.
+
+Displaying the Video:
+
+python
+          
+cv2.imshow('Video', frame)
+This line displays the frame with the detected faces in a window named "Video".
+
+Breaking the Loop:
+
+python
+          
+if cv2.waitKey(1) & 0xFF == ord('q'):
+    break
+This line breaks the loop and stops the video capture when the 'q' key is pressed.
+
+Releasing Resources:
+
+python
+          
+video_capture.release()
+cv2.destroyAllWindows()
+These lines release the video capture object and close all OpenCV windows.
